@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using DynamicQueryEngine.Core.Models;
 
@@ -6,7 +7,7 @@ namespace DynamicQueryEngine.Core.Services;
 
 public static class AggregationEngine
 {
-    public static IEnumerable<T> ApplyAggregation<T>(IEnumerable<T> data, RuleDefinition rule)
+    public static IEnumerable<object> ApplyAggregation<T>(IEnumerable<T> data, RuleDefinition rule)
     {
         var grouped = data.GroupBy(item => BuildGroupKey(item, rule.GroupBy));
         foreach (var group in grouped)
@@ -23,27 +24,53 @@ public static class AggregationEngine
         return string.Join("::", values);
     }
 
-    private static T ApplyAggregate<T>(IEnumerable<T> group, AggregationDefinition aggregation)
+    private static object ApplyAggregate<T>(
+        IQueryable<T> group,
+        AggregationDefinition aggregation)
     {
         var prop = typeof(T).GetProperty(aggregation.AggregateProperty, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
-        if (aggregation.AggregateFunction.Equals("Min", StringComparison.OrdinalIgnoreCase))
+        switch (aggregation.AggregateFunction)
         {
-            return group
-                .OrderBy(item => ConvertToDecimal(prop.GetValue(item)))
-                .First();
-        }
-        else if (aggregation.AggregateFunction.Equals("Max", StringComparison.OrdinalIgnoreCase))
-        {
-            return group
-                .OrderByDescending(item => ConvertToDecimal(prop.GetValue(item)))
-                .First();
-        }
-        else
-        {
-            throw new NotSupportedException($"Aggregate function '{aggregation.AggregateFunction}' not supported.");
+            case AggregateFunction.Min:
+                return group
+                    .OrderBy(item => ConvertToDecimal(prop.GetValue(item)))
+                    .First();
+
+            case AggregateFunction.Max:
+                return group
+                    .OrderByDescending(item => ConvertToDecimal(prop.GetValue(item)))
+                    .First();
+
+            case AggregateFunction.Count:
+                return group.Count();
+
+            default:
+                throw new NotSupportedException($"Aggregate function '{aggregation.AggregateFunction}' not supported.");
         }
     }
+
+    //private static T ApplyAggregate<T>(IEnumerable<T> group, AggregationDefinition aggregation)
+    //{
+    //    var prop = typeof(T).GetProperty(aggregation.AggregateProperty, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+    //    if (aggregation.AggregateFunction.Equals("Min", StringComparison.OrdinalIgnoreCase))
+    //    {
+    //        return group
+    //            .OrderBy(item => ConvertToDecimal(prop.GetValue(item)))
+    //            .First();
+    //    }
+    //    else if (aggregation.AggregateFunction.Equals("Max", StringComparison.OrdinalIgnoreCase))
+    //    {
+    //        return group
+    //            .OrderByDescending(item => ConvertToDecimal(prop.GetValue(item)))
+    //            .First();
+    //    }
+    //    else
+    //    {
+    //        throw new NotSupportedException($"Aggregate function '{aggregation.AggregateFunction}' not supported.");
+    //    }
+    //}
 
     private static decimal ConvertToDecimal(object value)
     {

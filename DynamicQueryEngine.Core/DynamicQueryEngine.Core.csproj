@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\AggregationEngine.cs" />
+    <Compile Remove="Services\RuleCompiler.cs" />
+    <Compile Remove="Services\RuleEvaluator.cs" />
+  </ItemGroup>
+
 </Project>

@@ -46,9 +46,9 @@ public static class RuleValidator
             throw new InvalidOperationException("Aggregation must be defined when GroupBy is provided.");
         }
 
-        if (rule.Aggregation is not null && !properties.Contains(rule.Aggregation.AggregateProperty))
-        {
-            throw new InvalidOperationException($"AggregateProperty '{rule.Aggregation.AggregateProperty}' invalid");
-        }
+        //if (rule.Aggregation is not null && !properties.Contains(rule.Aggregation.AggregateProperty))
+        //{
+        //    throw new InvalidOperationException($"AggregateProperty '{rule.Aggregation.AggregateProperty}' invalid");
+        //}
     }
 }

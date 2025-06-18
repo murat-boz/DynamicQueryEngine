@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicQueryEngine.Core", "DynamicQueryEngine.Core\DynamicQueryEngine.Core.csproj", "{AD500682-ECD8-4E17-BABA-818AD489C452}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicQueryEngine.WebApi", "DynamicQueryEngine.WebApi\DynamicQueryEngine.WebApi.csproj", "{D0FC3868-4AA8-4845-BD22-4793BB8C9681}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AD500682-ECD8-4E17-BABA-818AD489C452}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD500682-ECD8-4E17-BABA-818AD489C452}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD500682-ECD8-4E17-BABA-818AD489C452}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0FC3868-4AA8-4845-BD22-4793BB8C9681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0FC3868-4AA8-4845-BD22-4793BB8C9681}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0FC3868-4AA8-4845-BD22-4793BB8C9681}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0FC3868-4AA8-4845-BD22-4793BB8C9681}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

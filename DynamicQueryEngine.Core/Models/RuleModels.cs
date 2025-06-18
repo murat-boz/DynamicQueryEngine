@@ -28,9 +28,16 @@
         public object Value { get; set; }
     }
 
+    public enum AggregateFunction
+    {
+        Min,
+        Max,
+        Count
+    }
+
     public class AggregationDefinition
     {
-        public string AggregateProperty { get; set; }
-        public string AggregateFunction { get; set; }
+        public string? AggregateProperty { get; set; }
+        public AggregateFunction AggregateFunction { get; set; }
     }
 }
