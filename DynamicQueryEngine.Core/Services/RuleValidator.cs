@@ -7,9 +7,10 @@ public static class RuleValidator
 {
     public static void Validate<T>(RuleDefinition rule)
     {
-        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                   .Select(p => p.Name)
-                                   .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var properties = typeof(T)
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Select(p => p.Name)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         void ValidateGroup(ConditionGroup? group)
         {
